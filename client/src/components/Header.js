@@ -23,9 +23,9 @@ function Header() {
   // const [user, setUser] = useContext(UserContext)
   // const [dropdown, setDropdown] = useContext(DropdownContext)
   // const [isLoggedIn, setIsLoggedIn] = useState(localStorage.getItem('loggedIn') || false);
-  const [isAdmin, setIsAdmin] = useState(
-    localStorage.getItem("isAdmin") || false
-  );
+  // const [isAdmin, setIsAdmin] = useState(
+  //   localStorage.getItem("isAdmin") || false
+  // );
 
   let navigate = useNavigate();
 
@@ -78,6 +78,7 @@ console.log("sate",state)
   return (
     <nav>
       <div className="left-side">
+      {state.user.role !== "admin" ? (
         <ul>
           <li>
             <Link to={"/"} className="text-white">
@@ -98,6 +99,10 @@ console.log("sate",state)
             </Link>
           </li>
         </ul>
+      ):(
+        <div></div>
+
+      )}
       </div>
       <img src={require("../image/netflic.png")} alt="gambar"></img>
       <Nav className="right-side">

@@ -36,8 +36,9 @@ function App() {
   useEffect(() => {
     // Redirect Auth but just when isLoading is false
     if (!isLoading) {
-      if (state.isLogin === false) {
-        navigate('/Addfilm');
+      if (state.isLogin === true) {
+        // window.location('/Film')
+        navigate('/Film');
       }
     }
   }, [isLoading]);
@@ -91,21 +92,24 @@ function App() {
   //   }
   // }, [claim]);
 
-
+  
   return (
     <div>
       {/* {isLoading ? null : */}
+
       <Navbars/>
       <Routes>
+
         <Route path="/" element={<Home />} />
         <Route path="/Tvshow" element={<Tvshow />} />
         <Route path="/Movies" element={<Movies />} />
-        <Route path="/Detail/:id" element={<Detail />} />
 <Route element={<PrivateRouteLogin/>}>
 <Route element={<PrivateRouteUser/>}>
         <Route path="/Pay" element={<Pay />} />
         <Route path="/Profile" element={<Profile />} />
+        <Route path="/Detail/:id" element={<Detail />} />
 </Route>
+
 
 <Route element={<PrivateRouteAdmin />}>
         <Route path="/Film" element={<Film />} />

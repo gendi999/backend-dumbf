@@ -1,80 +1,90 @@
 import Mprops from "./Mprops"
+import { Link } from "react-router-dom";
+import { Col, NavDropdown, Row } from "react-bootstrap";
+import { useQuery } from "react-query";
+import { API } from '../config/api';
 import Button from 'react-bootstrap/Button';
 function Tvshow(){
-  const movie ={
-    TV:{
-      tv1: {
-        id:1,
-        image: 'Card1',
-        name: 'The Witcher',
-        year: '2019'
-      },
-      tv2: {
-        id:2,
-        image: 'Card2',
-        name: 'Persona 3 The Movie',
-        year: '2016'
-      },
-      tv3: {
-        id:3,
-        image: 'Card3',
-        name: 'Personal 3 The Movie',
-        year: '2016'
-      },
-      tv4: {
-        id:4,
-        image: 'Card4',
-        name: 'Personal 3 The Movie',
-        year: '2016'
-      },
-      tv5: {
-        id:5,
-        image: 'Card5',
-        name: 'Personal 3 The Movie',
-        year: '2016'
-      },
-      tv6: {
-        id:6,
-        image: 'Card2',
-        name: 'Personal 3 The Movie',
-        year: '2016'
-      },
+  // const movie ={
+  //   TV:{
+  //     tv1: {
+  //       id:1,
+  //       image: 'Card1',
+  //       name: 'The Witcher',
+  //       year: '2019'
+  //     },
+  //     tv2: {
+  //       id:2,
+  //       image: 'Card2',
+  //       name: 'Persona 3 The Movie',
+  //       year: '2016'
+  //     },
+  //     tv3: {
+  //       id:3,
+  //       image: 'Card3',
+  //       name: 'Personal 3 The Movie',
+  //       year: '2016'
+  //     },
+  //     tv4: {
+  //       id:4,
+  //       image: 'Card4',
+  //       name: 'Personal 3 The Movie',
+  //       year: '2016'
+  //     },
+  //     tv5: {
+  //       id:5,
+  //       image: 'Card5',
+  //       name: 'Personal 3 The Movie',
+  //       year: '2016'
+  //     },
+  //     tv6: {
+  //       id:6,
+  //       image: 'Card2',
+  //       name: 'Personal 3 The Movie',
+  //       year: '2016'
+  //     },
   
-    },
+  //   },
   
-    Movies: {
-      Movie1: {
-        image: 'Card6',
-        name: 'title1',
-        year: '2019'
-      },
-      Movie2: {
-        image: 'Card3',
-        name: 'tMovie2',
-        year: '2018'
-      },
-      Movie3: {
-        image: 'Card1',
-        name: 'title1',
-        year: '2019'
-      },
-      Movie4: {
-        image: 'Card1',
-        name: 'title1',
-        year: '2019'
-      },
-      Movie5: {
-        image: 'Card1',
-        name: 'title1',
-        year: '2019'
-      },
-      Movie6: {
-        image: 'Card1',
-        name: 'title1',
-        year: '2019'
-      },
-    }
-  }
+  //   Movies: {
+  //     Movie1: {
+  //       image: 'Card6',
+  //       name: 'title1',
+  //       year: '2019'
+  //     },
+  //     Movie2: {
+  //       image: 'Card3',
+  //       name: 'tMovie2',
+  //       year: '2018'
+  //     },
+  //     Movie3: {
+  //       image: 'Card1',
+  //       name: 'title1',
+  //       year: '2019'
+  //     },
+  //     Movie4: {
+  //       image: 'Card1',
+  //       name: 'title1',
+  //       year: '2019'
+  //     },
+  //     Movie5: {
+  //       image: 'Card1',
+  //       name: 'title1',
+  //       year: '2019'
+  //     },
+  //     Movie6: {
+  //       image: 'Card1',
+  //       name: 'title1',
+  //       year: '2019'
+  //     },
+  //   }
+  // }
+  let { data: films } = useQuery("filmsCache", async () => {
+    const response = await API.get("/films");
+    return response.data.data;
+  });
+  console.log(films);
+  
     return(
         <div className="bg">
         <div className="the">
@@ -89,7 +99,23 @@ function Tvshow(){
         </div>
 
         <img className="kontol" src={require( "../image/joker.png")} alt="gambar"></img>
-        <Mprops value={movie}/>
+        <div className="d-flex flex-wrap justify-content-center gap-4">
+         {films?.map((item) => (
+           <div className="flex">
+            <div className="props">
+            <Link to={`/Detail/${item.id}`}><img src={item.thumbnailfilm}/></Link>
+            <h5>
+
+            <Link to={`/Detail/${item.id}`}>{item.title}</Link>
+            </h5>
+            <h5>{item.year}</h5>
+
+            </div>
+
+          </div>
+
+         ))} 
+         </div>
     </div>
     )
 }
